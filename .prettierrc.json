@@ -1,0 +1,10 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "singleQuote": true,
+    "printWidth": 120,
+    "proseWrap": "preserve",
+    "importOrderParserPlugins": ["typescript", "decorators-legacy", "jsx"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  }
