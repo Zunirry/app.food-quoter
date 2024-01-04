@@ -3,13 +3,11 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import {Card} from 'src/components/Card';
 import {FlatList} from 'src/components/FlatList';
 import {Title} from 'src/components/Title';
@@ -27,49 +25,60 @@ const windowsWidth = Dimensions.get('window').width;
 const Home = () => {
   const dishes: Dishes[] = Array(10).fill({
     name: 'Donas',
-    // icon: donasImg,
+    icon: null,
     soldAveragePerWeek: 150,
     earning: 100,
   });
 
   return (
     <SafeAreaView style={style.container}>
-      <ScrollView>
-        <FlatList
-          data={dishes}
-          keyExtractor={({name}, key) => `${name}-${key}`}>
-          {(item: Dishes) => (
-            <View style={style.flatItem}>
-              <TouchableOpacity>
-                <Card>
-                  <View style={style.bodyWrapper}>
-                    <Image
-                      source={require('../assets/images/donas.jpeg')}
-                      style={style.coverImage}
-                      resizeMode="cover"
-                    />
-                    <View style={style.titleWrapper}>
-                      <Title>{item.name}</Title>
-                    </View>
-                    <View style={style.earningWrapper}>
-                      <Text style={style.statistics}>Ganancias</Text>
+      <FlatList data={dishes} keyExtractor={({name}, key) => `${name}-${key}`}>
+        {(item: Dishes) => (
+          <View style={style.flatItem}>
+            <TouchableOpacity>
+              <Card>
+                <View style={style.bodyWrapper}>
+                  <Image
+                    source={require('../assets/images/donas.jpeg')}
+                    style={style.coverImage}
+                    resizeMode="cover"
+                  />
+                  <View style={style.titleWrapper}>
+                    <Title>{item.name}</Title>
+                  </View>
+                  <View style={style.earningWrapper}>
+                    <Text style={style.statistics}>Ganancias</Text>
+                    <View style={style.statisticsWrapper}>
                       <Text style={style.statistics}>{item.earning}</Text>
+                      <Image
+                        style={style.arrowStatistics}
+                        source={require('../assets/icons/arrow_up.png')}
+                      />
                     </View>
-                    <View style={style.soldPerWeeksWrapper}>
-                      <Text style={style.statistics}>Semanal</Text>
+                  </View>
+                  <View style={style.soldPerWeeksWrapper}>
+                    <Text style={style.statistics}>Semanal</Text>
+                    <View style={style.statisticsWrapper}>
                       <Text style={style.statistics}>
                         {item.soldAveragePerWeek}
                       </Text>
+                      <Image
+                        style={style.arrowStatistics}
+                        source={require('../assets/icons/arrow_down.png')}
+                      />
                     </View>
                   </View>
-                </Card>
-              </TouchableOpacity>
-            </View>
-          )}
-        </FlatList>
-      </ScrollView>
+                </View>
+              </Card>
+            </TouchableOpacity>
+          </View>
+        )}
+      </FlatList>
       <TouchableOpacity style={style.buttonAdd}>
-        <Icon name="activity" size={30} color="blue" />
+        <Image
+          style={style.plusIcon}
+          source={require('../assets/icons/plus.png')}
+        />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -175,6 +184,7 @@ const style = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
   },
+  statisticsWrapper: {flexDirection: 'row', alignItems: 'center'},
   buttonAdd: {
     position: 'absolute',
     bottom: 100,
@@ -194,6 +204,8 @@ const style = StyleSheet.create({
     shadowRadius: 3,
     elevation: 4,
   },
+  plusIcon: {width: 25, height: 25, tintColor: HexaColor.PRIMARY},
+  arrowStatistics: {width: 17, height: 17},
 });
 
 export default Home;
