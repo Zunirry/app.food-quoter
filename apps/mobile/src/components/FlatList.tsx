@@ -5,6 +5,9 @@ interface FlatList<T> {
   data: T[];
   children: (item: T) => ReactNode;
   keyExtractor?: (item: T, index: number) => string;
+  horizontal?: boolean;
+  showsVerticalScrollIndicator?: boolean;
+  alwaysBounceVertical?: boolean;
 }
 
 interface Item {
@@ -20,13 +23,23 @@ const Item = <T,>({
 }) => {
   return <View>{children(item)}</View>;
 };
-export const FlatList = <T,>({children, data, keyExtractor}: FlatList<T>) => {
+export const FlatList = <T,>({
+  children,
+  data,
+  keyExtractor,
+  horizontal = false,
+  alwaysBounceVertical = false,
+  showsVerticalScrollIndicator = false,
+}: FlatList<T>) => {
   return (
     <View>
       <List
+        showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+        alwaysBounceVertical={alwaysBounceVertical}
+        horizontal={horizontal}
         data={data}
-        renderItem={({item}) => <Item children={children} item={item} />}
         keyExtractor={keyExtractor}
+        renderItem={({item}) => <Item children={children} item={item} />}
       />
     </View>
   );

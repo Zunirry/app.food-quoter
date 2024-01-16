@@ -15,11 +15,11 @@ const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      {routes.map((route, key) => (
-        <Stack.Navigator initialRouteName="Home" key={key}>
-          <Stack.Screen {...route} options={{headerShown: false}} />
-        </Stack.Navigator>
-      ))}
+      <Stack.Navigator initialRouteName="Home">
+        {routes.map((route, key) => (
+          <Stack.Screen {...route} options={{headerShown: false}} key={key} />
+        ))}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

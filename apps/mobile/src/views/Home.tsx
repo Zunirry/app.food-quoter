@@ -22,7 +22,7 @@ interface Dishes {
 
 const windowsWidth = Dimensions.get('window').width;
 
-const Home = () => {
+const Home = ({navigation}: any) => {
   const dishes: Dishes[] = Array(10).fill({
     name: 'Donas',
     icon: null,
@@ -35,7 +35,7 @@ const Home = () => {
       <FlatList data={dishes} keyExtractor={({name}, key) => `${name}-${key}`}>
         {(item: Dishes) => (
           <View style={style.flatItem}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Details')}>
               <Card>
                 <View style={style.bodyWrapper}>
                   <Image
@@ -107,6 +107,9 @@ const style = StyleSheet.create({
   bodyWrapper: {
     width: '100%',
     height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
   },
   coverImage: {
     height: '100%',
@@ -120,9 +123,6 @@ const style = StyleSheet.create({
   titleWrapper: {
     position: 'absolute',
     top: 0,
-    right: '50%',
-    left: '50%',
-    transform: [{translateX: parseInt('-50%', 22)}],
     width: windowsWidth * 0.5,
     height: 45,
     borderBottomLeftRadius: 20,
