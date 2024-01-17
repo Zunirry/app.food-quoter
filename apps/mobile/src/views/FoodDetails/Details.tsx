@@ -67,7 +67,7 @@ const Header = () => {
   return (
     <View style={style.containerHero}>
       <Image
-        source={require('../assets/images/donas.jpeg')}
+        source={require('../../assets/images/donas.jpeg')}
         resizeMode="cover"
         style={style.image}
       />
@@ -135,7 +135,7 @@ const Body = ({
   );
 };
 
-const Details = () => {
+export const Details = () => {
   const ingredients: Ingredients[] = Array(15).fill({
     name: 'Masa',
     brand: 'Azteca',
@@ -199,5 +199,3 @@ const Details = () => {
     </SafeAreaView>
   );
 };
-
-export default Details;

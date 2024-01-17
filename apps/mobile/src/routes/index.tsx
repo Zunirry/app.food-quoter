@@ -1,5 +1,6 @@
+import Details from 'src/views/FoodDetails';
 import Home from 'src/views/Home';
-import Details from 'src/views/Details';
+import Recipes from 'src/views/Recipes';
 
 interface Routes {
   name: string;
@@ -10,6 +11,10 @@ export const routes: Routes[] = [
   {
     name: 'Home',
     component: Home,
+  },
+  {
+    name: 'All recipes',
+    component: Recipes,
   },
   {
     name: 'Details',

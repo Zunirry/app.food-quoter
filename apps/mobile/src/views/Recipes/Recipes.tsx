@@ -22,7 +22,7 @@ interface Dishes {
 
 const windowsWidth = Dimensions.get('window').width;
 
-const Home = ({navigation}: any) => {
+export const Recipes = ({navigation}: any) => {
   const dishes: Dishes[] = Array(10).fill({
     name: 'Donas',
     icon: null,
@@ -39,7 +39,7 @@ const Home = ({navigation}: any) => {
               <Card>
                 <View style={style.bodyWrapper}>
                   <Image
-                    source={require('../assets/images/donas.jpeg')}
+                    source={require('../../assets/images/donas.jpeg')}
                     style={style.coverImage}
                     resizeMode="cover"
                   />
@@ -52,7 +52,7 @@ const Home = ({navigation}: any) => {
                       <Text style={style.statistics}>{item.earning}</Text>
                       <Image
                         style={style.arrowStatistics}
-                        source={require('../assets/icons/arrow_up.png')}
+                        source={require('../../assets/icons/arrow_up.png')}
                       />
                     </View>
                   </View>
@@ -64,7 +64,7 @@ const Home = ({navigation}: any) => {
                       </Text>
                       <Image
                         style={style.arrowStatistics}
-                        source={require('../assets/icons/arrow_down.png')}
+                        source={require('../../assets/icons/arrow_down.png')}
                       />
                     </View>
                   </View>
@@ -77,7 +77,7 @@ const Home = ({navigation}: any) => {
       <TouchableOpacity style={style.buttonAdd}>
         <Image
           style={style.plusIcon}
-          source={require('../assets/icons/plus.png')}
+          source={require('../../assets/icons/plus.png')}
         />
       </TouchableOpacity>
     </SafeAreaView>
@@ -208,4 +208,4 @@ const style = StyleSheet.create({
   arrowStatistics: {width: 17, height: 17},
 });
 
-export default Home;
+export default Recipes;
