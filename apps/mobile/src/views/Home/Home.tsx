@@ -1,101 +1,75 @@
 import React from 'react';
-import {
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FlatList} from 'src/components/FlatList';
+import {MasterLayout} from 'src/components/MasterLayout';
+import {CommonSkeleton, SkeletonCard} from 'src/components/Skeleton';
 import {Title} from 'src/components/Title';
+import {useRecipeQuery} from 'src/hooks/useRecipes';
+import {Recipes} from 'src/types/recipes';
 import {HexaColor} from 'src/utils/color';
 
-interface TopRecipes {
-  name: string;
-  costForMe: number;
-  priceForUnit: number;
-  profits: {
-    day: number;
-    week: number;
-    month: number;
-  };
-}
+const TOP_RECIPES = 3;
 
 export const Home = () => {
-  const topRecipes: TopRecipes[] = Array(3).fill({
-    name: 'Donas',
-    costForMe: 4.5,
-    priceForUnit: 15,
-    profits: {
-      day: 10,
-      week: 300,
-      month: 1000,
-    },
-  });
+  const {data, isLoading} = useRecipeQuery(TOP_RECIPES);
+
+  if (isLoading) {
+    return (
+      <MasterLayout>
+        <SkeletonCard />
+        <CommonSkeleton />
+      </MasterLayout>
+    );
+  }
 
   return (
     // GRADIENT BLUE
     // rgba(0, 167, 214, 1)
     // rgba(0, 138, 255, 1)
 
-    <ImageBackground
-      resizeMode="cover"
-      source={require('../../assets/icons/background-home.png')}
-      style={style.imageBackground}>
-      <SafeAreaView style={style.container}>
-        <View style={style.header}>
-          <Text>MENU</Text>
-          <TouchableOpacity>
-            <Image
-              resizeMode="contain"
-              style={style.buttonMenu}
-              source={require('src/assets/icons/menu.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={style.profits}>
-          <Text>Profits</Text>
-        </View>
+    <MasterLayout>
+      <View style={style.header}>
+        <View></View>
+        <TouchableOpacity>
+          <Image
+            resizeMode="contain"
+            style={style.buttonMenu}
+            source={require('src/assets/icons/menu.png')}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={style.profits}>
+        <Text>Profits</Text>
+      </View>
 
-        <FlatList data={topRecipes}>
-          {item => (
-            <TouchableOpacity style={style.recipes}>
-              <View style={style.recipeItem}>
-                <Title color={HexaColor.NAVYBLUE} fontSize={22}>
-                  {item.name}
-                </Title>
-                <Title
-                  color={HexaColor.SUCCESS}>{`$${item.profits.week}`}</Title>
-              </View>
-              <View style={style.recipeItem}>
-                <Text style={style.recipeCosts}>
-                  Costo por {item.name} ${item.costForMe}
-                </Text>
-                <Text style={style.recipeCosts}>
-                  Precio {item.priceForUnit}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </FlatList>
-      </SafeAreaView>
-    </ImageBackground>
+      <FlatList data={data! as Recipes[]}>
+        {item => (
+          <TouchableOpacity style={style.recipes}>
+            <View style={style.recipeItem}>
+              <Title color={HexaColor.NAVYBLUE} fontSize={22}>
+                {item.name}
+              </Title>
+              <Title color={HexaColor.SUCCESS}>{`$${item.profits.week}`}</Title>
+            </View>
+            <View style={style.recipeItem}>
+              <Text style={style.recipeCosts}>
+                Costo por {item.name} ${item.costForMe}
+              </Text>
+              <Text style={style.recipeCosts}>Precio {item.priceForUnit}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </FlatList>
+    </MasterLayout>
   );
 };
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  imageBackground: {
-    flex: 1,
-  },
-  buttonMenu: {width: 30, height: 30},
+  buttonMenu: {width: 30, height: 30, tintColor: HexaColor.WHITE},
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     margin: '5%',
   },
   profits: {
@@ -126,6 +100,7 @@ const style = StyleSheet.create({
     position: 'relative',
   },
   recipes: {
+    borderRadius: 5,
     margin: '5%',
     height: 100,
     padding: '3%',

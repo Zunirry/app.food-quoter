@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Dimensions,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import {Card} from 'src/components/Card';
 import {FlatList} from 'src/components/FlatList';
+import {MasterLayout} from 'src/components/MasterLayout';
 import {Title} from 'src/components/Title';
 import {HexaColor, RGBAColor} from 'src/utils/color';
 
@@ -31,7 +31,7 @@ export const Recipes = ({navigation}: any) => {
   });
 
   return (
-    <SafeAreaView style={style.container}>
+    <MasterLayout>
       <FlatList data={dishes} keyExtractor={({name}, key) => `${name}-${key}`}>
         {(item: Dishes) => (
           <View style={style.flatItem}>
@@ -80,7 +80,7 @@ export const Recipes = ({navigation}: any) => {
           source={require('../../assets/icons/plus.png')}
         />
       </TouchableOpacity>
-    </SafeAreaView>
+    </MasterLayout>
   );
 };
 
@@ -127,7 +127,7 @@ const style = StyleSheet.create({
     height: 45,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    backgroundColor: HexaColor.DARK,
+    backgroundColor: RGBAColor.DARK,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: HexaColor.SHADOW_WHITE,
@@ -146,7 +146,7 @@ const style = StyleSheet.create({
     width: windowsWidth * 0.45,
     height: 45,
     borderTopRightRadius: 20,
-    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 20,
     backgroundColor: RGBAColor.DARK,
     justifyContent: 'center',
     alignItems: 'center',
@@ -166,7 +166,7 @@ const style = StyleSheet.create({
     width: windowsWidth * 0.45,
     height: 45,
     borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
     backgroundColor: RGBAColor.DARK,
     justifyContent: 'center',
     alignItems: 'center',

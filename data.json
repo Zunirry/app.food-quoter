@@ -1,0 +1,48 @@
+{
+	"recipes": [
+		{
+			"id": 1,
+			"name": "Donas",
+			"costForMe": 4.5,
+			"priceForUnit": 15,
+			"profits": {
+				"day": 30,
+				"week": 2100,
+				"month": 8400
+			}
+		},
+		{
+			"id": 2,
+			"name": "Chocolate Abuelita",
+			"costForMe": 8,
+			"priceForUnit": 25,
+			"profits": {
+				"day": 50,
+				"week": 350,
+				"month": 1400
+			}
+		},
+		{
+			"id": 3,
+			"name": "Tostilocos",
+			"costForMe": 30,
+			"priceForUnit": 50,
+			"profits": {
+				"day": 50,
+				"week": 200,
+				"month": 300
+			}
+		},
+		{
+			"id": 4,
+			"name": "Buñuelos",
+			"costForMe": 5,
+			"priceForUnit": 10,
+			"profits": {
+				"day": 20,
+				"week": 230,
+				"month": 300
+			}
+		}
+	 ]
+}
