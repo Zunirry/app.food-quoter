@@ -1,16 +1,22 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {icons} from 'src/assets/icons';
+import {Card} from 'src/components/Card';
+import {CardRecipe} from 'src/components/CardRecipes';
 import {FlatList} from 'src/components/FlatList';
+import {Header} from 'src/components/Header';
 import {MasterLayout} from 'src/components/MasterLayout';
+import {Profits} from 'src/components/Profits';
 import {CommonSkeleton, SkeletonCard} from 'src/components/Skeleton';
 import {Title} from 'src/components/Title';
 import {useRecipeQuery} from 'src/hooks/useRecipes';
 import {Recipes} from 'src/types/recipes';
 import {HexaColor} from 'src/utils/color';
+import {windowsHeight} from 'src/utils/dimension';
 
 const TOP_RECIPES = 3;
 
-export const Home = () => {
+export const Home = ({navigation}: any) => {
   const {data, isLoading} = useRecipeQuery(TOP_RECIPES);
 
   if (isLoading) {
@@ -28,96 +34,78 @@ export const Home = () => {
     // rgba(0, 138, 255, 1)
 
     <MasterLayout>
-      <View style={style.header}>
-        <View></View>
-        <TouchableOpacity>
-          <Image
-            resizeMode="contain"
-            style={style.buttonMenu}
-            source={require('src/assets/icons/menu.png')}
-          />
-        </TouchableOpacity>
+      <Header />
+      <Profits />
+      <View style={style.topRecipes}>
+        <Text style={style.topTitle}>TOP</Text>
+        <Text style={style.topSubtitle}>Recetas</Text>
       </View>
-      <View style={style.profits}>
-        <Text>Profits</Text>
-      </View>
-
-      <FlatList data={data! as Recipes[]}>
-        {item => (
-          <TouchableOpacity style={style.recipes}>
-            <View style={style.recipeItem}>
-              <Title color={HexaColor.NAVYBLUE} fontSize={22}>
-                {item.name}
-              </Title>
-              <Title color={HexaColor.SUCCESS}>{`$${item.profits.week}`}</Title>
-            </View>
-            <View style={style.recipeItem}>
-              <Text style={style.recipeCosts}>
-                Costo por {item.name} ${item.costForMe}
-              </Text>
-              <Text style={style.recipeCosts}>Precio {item.priceForUnit}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      </FlatList>
+      {/**
+       * If data hasn't items or data is undefined
+       **/}
+      {data?.length === 0 || !data ? (
+        <Card styles={style.noDataCard}>
+          <View style={style.noDataContainer}>
+            <Image
+              source={icons.noRecipes}
+              style={style.noDataImage}
+              resizeMode="contain"
+            />
+            <Title color={HexaColor.SOFTBLACK}>
+              No hay recetas que mostrar aun
+            </Title>
+          </View>
+        </Card>
+      ) : (
+        /**
+         * If data  has items or data exists
+         **/
+        <FlatList
+          data={data! as Recipes[]}
+          showsVerticalScrollIndicator
+          alwaysBounceVertical>
+          {item => (
+            <CardRecipe
+              item={item}
+              navigation={navigation}
+              styles={style.card}
+            />
+          )}
+        </FlatList>
+      )}
     </MasterLayout>
   );
 };
 
 const style = StyleSheet.create({
-  buttonMenu: {width: 30, height: 30, tintColor: HexaColor.WHITE},
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: '5%',
-  },
-  profits: {
-    backgroundColor: HexaColor.WHITE,
-    height: 150,
+  topRecipes: {
     marginHorizontal: '5%',
-    marginBottom: '5%',
     flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+  },
+  topTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: HexaColor.WARNING,
+  },
+  topSubtitle: {
+    marginLeft: 5,
+    fontSize: 14,
+    fontWeight: '600',
+    color: HexaColor.WARNING,
+  },
+  card: {marginVertical: 12, height: 150},
+  noDataCard: {
+    height: windowsHeight / 3.5,
+  },
+  noDataContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    shadowColor: HexaColor.SHADOW_WHITE,
-    shadowOffset: {
-      width: 2,
-      height: 3,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  coverImage: {
-    height: '100%',
-    width: '100%',
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomRightRadius: 5,
-    position: 'relative',
-  },
-  recipes: {
-    borderRadius: 5,
-    margin: '5%',
-    height: 100,
-    padding: '3%',
-    justifyContent: 'space-between',
+    marginHorizontal: '5%',
     backgroundColor: HexaColor.WHITE,
-    shadowColor: HexaColor.SHADOW_WHITE,
-    shadowOffset: {
-      width: 2,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
+    borderRadius: 20,
   },
-  recipeItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  recipeCosts: {color: '#6c6c6c', fontStyle: 'italic'},
+  noDataImage: {height: 150, width: 150, marginBottom: 20},
 });

@@ -23,6 +23,7 @@ const Item = <T,>({
 }) => {
   return <View>{children(item)}</View>;
 };
+
 export const FlatList = <T,>({
   children,
   data,
@@ -38,6 +39,7 @@ export const FlatList = <T,>({
         alwaysBounceVertical={alwaysBounceVertical}
         horizontal={horizontal}
         data={data}
+        key={`index-${keyExtractor}`}
         keyExtractor={keyExtractor}
         renderItem={({item}) => <Item children={children} item={item} />}
       />
